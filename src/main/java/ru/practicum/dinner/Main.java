@@ -1,9 +1,12 @@
 package ru.practicum.dinner;
 
+import lombok.val;
+
+import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
-
     static DinnerConstructor dc;
     static Scanner scanner;
 
@@ -42,24 +45,51 @@ public class Main {
         String dishName = scanner.nextLine();
 
         // добавьте новое блюдо
+        dc.addDish(dishType, dishName);
     }
 
     private static void generateDishCombo() {
+        var typeList = new ArrayList<String>();
+        int numberOfCombos = 0;
+
         System.out.println("Начинаем конструировать обед...");
-
-        System.out.println("Введите количество наборов, которые нужно сгенерировать:");
-        int numberOfCombos = scanner.nextInt();
-        scanner.nextLine();
-
         System.out.println("Вводите типы блюда, разделяя символом переноса строки (enter). Для завершения ввода введите пустую строку");
         String nextItem = scanner.nextLine();
-
         //реализуйте ввод типов блюд
         while (!nextItem.isEmpty()) {
-
+            if (dc.checkType(nextItem)) {
+                typeList.add(nextItem);
+            } else {
+                System.out.println("Нет такого типа. Попробуйте ещё раз");
+            }
+            nextItem = scanner.nextLine();
         }
 
-        // сгенерируйте комбинации блюд и выведите на экран
+        while (true) {
+            System.out.println("Введите количество наборов, которые нужно сгенерировать:");
 
+            try {
+                numberOfCombos = scanner.nextInt();
+            } catch (InputMismatchException e) {
+                System.out.println("Введите число!");
+                continue;
+            }
+
+            if (numberOfCombos <= 0) {
+                System.out.println("Введите целое число больше 0!");
+                continue;
+            }
+
+            if (!dc.checkMaxCombinations(numberOfCombos, typeList)) {
+                System.out.println("Введите меньшее количество наборов!");
+                continue;
+            }
+
+            break;
+        }
+        scanner.nextLine();
+
+        // сгенерируйте комбинации блюд и выведите на экран
+        dc.createMenuCombinations(numberOfCombos, typeList);
     }
 }
