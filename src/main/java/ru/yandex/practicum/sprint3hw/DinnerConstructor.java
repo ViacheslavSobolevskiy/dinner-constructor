@@ -1,4 +1,4 @@
-package ru.practicum.dinner;
+package ru.yandex.practicum.sprint3hw;
 
 import java.util.*;
 
