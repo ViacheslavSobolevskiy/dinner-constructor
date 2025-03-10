@@ -1,7 +1,5 @@
 package ru.practicum.dinner;
 
-import lombok.val;
-
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -23,10 +21,16 @@ public class Main {
                     addNewDish();
                     break;
                 case "2":
+                    if (dc.menu.isEmpty()) {
+                        System.out.println("Добавьте хотя бы одно блюдо.");
+                        break;
+                    }
                     generateDishCombo();
                     break;
                 case "3":
                     return;
+                default:
+                    System.out.println("Неверная команда.");
             }
         }
     }
@@ -55,12 +59,13 @@ public class Main {
         System.out.println("Начинаем конструировать обед...");
         System.out.println("Вводите типы блюда, разделяя символом переноса строки (enter). Для завершения ввода введите пустую строку");
         String nextItem = scanner.nextLine();
+
         //реализуйте ввод типов блюд
         while (!nextItem.isEmpty()) {
             if (dc.checkType(nextItem)) {
                 typeList.add(nextItem);
             } else {
-                System.out.println("Нет такого типа. Попробуйте ещё раз");
+                System.out.println("Нет такого типа блюда. Выберите из списка: " + dc.menu.keySet());
             }
             nextItem = scanner.nextLine();
         }

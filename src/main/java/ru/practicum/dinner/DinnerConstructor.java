@@ -1,15 +1,12 @@
 package ru.practicum.dinner;
 
-import lombok.val;
-import org.jetbrains.annotations.NotNull;
-
 import java.util.*;
 
 public class DinnerConstructor {
     public HashMap<String, ArrayList<String>> menu; // Меню
 
     public DinnerConstructor() {
-        menu = new HashMap<String, ArrayList<String>>();
+        this.menu = new HashMap<>();
     }
 
     public void addDish(String dishType, String dishName) {
@@ -30,17 +27,17 @@ public class DinnerConstructor {
         return menu.containsKey(type);
     }
 
-    private ArrayList<String> getNewCombination(@NotNull List<String> types) {
+    private ArrayList<String> getNewCombination(List<String> types) {
         ArrayList<String> newCombination = new ArrayList<>();
         for (String type : types) {
-            val rand = new Random().nextInt(menu.get(type).size());
+            int rand = new Random().nextInt(menu.get(type).size());
             newCombination.add(menu.get(type).get(rand));
         }
         return newCombination;
     }
 
-    private boolean checkUnique(@NotNull Map<Integer, ArrayList<String>> combinations,
-                                @NotNull List<String> combination) {
+    private boolean checkUnique(Map<Integer, ArrayList<String>> combinations,
+                                ArrayList<String> combination) {
         for (ArrayList<String> combo : combinations.values()) {
             if (combo.equals(combination))
                 return false;
@@ -48,7 +45,7 @@ public class DinnerConstructor {
         return true;
     }
 
-    public boolean checkMaxCombinations(int numberOfCombos, @NotNull List<String> types) {
+    public boolean checkMaxCombinations(int numberOfCombos, ArrayList<String> types) {
         int maxCombinations = 1;
 
         for (var type : types)
@@ -61,9 +58,12 @@ public class DinnerConstructor {
         return true;
     }
 
-    public void createMenuCombinations(int numberOfCombos, @NotNull List<String> types) {
+    public void createMenuCombinations(int numberOfCombos, List<String> types) {
         Map<Integer, ArrayList<String>> combinations = new HashMap<>();
 
+        if (types == null || types.isEmpty()) {
+            throw new IllegalArgumentException("Список типов блюд пуст.");
+        }
 
         for (int i = 0; i < numberOfCombos; i++) {
             ArrayList<String> newCombination = getNewCombination(types);
