@@ -54,7 +54,7 @@ public class Main {
 
     private static void generateDishCombo() {
         var typeList = new ArrayList<String>();
-        int numberOfCombos = 0;
+        int numberOfCombos;
 
         System.out.println("Начинаем конструировать обед...");
         System.out.println("Вводите типы блюда, разделяя символом переноса строки (enter). Для завершения ввода введите пустую строку");
